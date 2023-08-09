@@ -12,20 +12,32 @@ const UsersCards = () => {
     }, [])
   
     return (
-      <>
-      {listOfUsers.map((value: User, key) => {
-        return (
-          <div key={key}>
-            <div>{value.id}</div>
-            <div>{value.name}</div>
-            <div>{value.email}</div>
-            <div>{value.lastLoginTime}</div>
-            <div>{value.registrationTime}</div>
-            <div>{value.status}</div>
-          </div>
-        )
-      })}
-      </>
+      <table className="table table-bordered border-primary">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>E-mail</th>
+            <th>Last Login Time</th>
+            <th>Registration Time</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {listOfUsers.map((value: User, key) => {
+            return (
+              <tr key={key}>
+                  <td>{value.id}</td>
+                  <td>{value.name}</td>
+                  <td>{value.email}</td>
+                  <td>{value.lastLoginTime}</td>
+                  <td>{value.registrationTime}</td>
+                  <td>{value.status}</td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
     )
 }
 
