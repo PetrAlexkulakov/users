@@ -1,12 +1,40 @@
-
+import axios from 'axios'
+import { useState } from 'react'
 
 const Register = () => {
+  const [ name, setName ] = useState('');
+  const [ email, setEmail ] = useState('');
+  const [ password, setPassword ] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const axiosInstance = axios.create({
+      baseURL: "http://localhost:3001/users",
+    });
+    
+    axiosInstance.post("/", {
+      name,
+      email,
+      password,
+      lastLoginTime: String(Date.now()),
+      status: "active",
+    })
+      .then((response) => {
+        // Обработка успешного ответа
+        console.log("Response:", response.data);
+      })
+      .catch((error) => {
+        // Обработка ошибки
+        console.error("Error:", error);
+      });
+  };
+
   return (
     <div className="d-flex align-items-center justify-content-center">
-      <form className="d-flex flex-column border border-primary p-1 gap-1">
-        <input type="text" name="name" placeholder='Name' />
-        <input type="email" name="email" placeholder='E-mail' />
-        <input type="password" name="password" placeholder='Password' />
+      <form onSubmit={handleSubmit} className="d-flex flex-column border border-primary p-1 gap-1">
+        <input type="text" name="name" placeholder='Name' onChange={(e) => setName(e.target.value)} />
+        <input type="email" name="email" placeholder='E-mail' onChange={(e) => setEmail(e.target.value)} />
+        <input type="password" name="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
         <button type="submit" className="btn border-primary">Register</button>
       </form>
     </div>

@@ -8,11 +8,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        lastLoginTime: {
+        password: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        registrationTime: {
+        lastLoginTime: {
             type: DataTypes.STRING,
             allowNull: false,
         },
