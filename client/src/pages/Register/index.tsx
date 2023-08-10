@@ -1,10 +1,12 @@
 import axios from 'axios'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [ name, setName ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
+  const navigate = useNavigate()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,12 +21,10 @@ const Register = () => {
       lastLoginTime: String(Date.now()),
       status: "active",
     })
-      .then((response) => {
-        // Обработка успешного ответа
-        console.log("Response:", response.data);
+      .then(() => {
+        navigate('/')
       })
       .catch((error) => {
-        // Обработка ошибки
         console.error("Error:", error);
       });
   };

@@ -1,4 +1,4 @@
-import UsersCards from '../../components/UsersCards/UsersCards'
+import UsersCards from '../../components/UsersCards'
 
 const UsersPage = () => {
   return (

@@ -3,6 +3,6 @@ export interface User {
     name: string;
     email: string;
     lastLoginTime: string;
-    registrationTime: string;
+    createdAt: string;
     status: "active" | "blocked";
 }

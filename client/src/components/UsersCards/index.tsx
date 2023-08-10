@@ -31,7 +31,7 @@ const UsersCards = () => {
                   <td>{value.name}</td>
                   <td>{value.email}</td>
                   <td>{value.lastLoginTime}</td>
-                  <td>{value.registrationTime}</td>
+                  <td>{value.createdAt}</td>
                   <td>{value.status}</td>
               </tr>
             )
