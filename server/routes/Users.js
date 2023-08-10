@@ -14,4 +14,17 @@ router.post("/", async (req, res) => {
     res.json(user)
 })
 
+router.put("/:id", async (req, res) => {
+    const userId = req.params.id;
+    const updatedData = req.body;
+
+    const user = await Users.findByPk(userId);
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+    await user.update(updatedData);
+
+    res.json(user)
+})
+
 module.exports = router

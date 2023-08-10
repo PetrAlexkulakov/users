@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
   const [ name, setName ] = useState('');
@@ -36,6 +37,7 @@ const Register = () => {
         <input type="email" name="email" placeholder='E-mail' onChange={(e) => setEmail(e.target.value)} />
         <input type="password" name="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
         <button type="submit" className="btn border-primary">Register</button>
+        <Link to="/login">Login</Link>
       </form>
     </div>
   )

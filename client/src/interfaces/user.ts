@@ -4,5 +4,7 @@ export interface User {
     email: string;
     lastLoginTime: string;
     createdAt: string;
+    updatedAt: string;
+    password: string;
     status: "active" | "blocked";
 }

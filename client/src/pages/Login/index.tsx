@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { User } from '../../interfaces/user';
 
 const Login = () => {
@@ -10,9 +11,15 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    axios.get("http://localhost:3001/users").then((response) => {
-        const user = response.data.find((el: User) => el.email === email)
+    axios.get("http://localhost:3001/users").then(async (response) => {
+        const user: User = response.data.find((el: User) => el.email === email)
         if (user && user.password === password){
+            user.lastLoginTime = String(Math.random());
+            await axios.put(`http://localhost:3001/users/${user.id}`, user).then(response => {
+                console.log('User updated:', response.data);
+            }).catch(error => {
+                console.error('Error:', error);
+            });
             navigate('/')
         }
     })  
@@ -24,6 +31,7 @@ const Login = () => {
         <input type="email" name="email" placeholder='E-mail' onChange={(e) => setEmail(e.target.value)} />
         <input type="password" name="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
         <button type="submit" className="btn border-primary">Login</button>
+        <Link to="/register">Registration</Link>
       </form>
     </div>
   )
