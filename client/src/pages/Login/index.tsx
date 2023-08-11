@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { User } from '../../interfaces/user';
+import { formatDateFromDate } from '../../share/fromatDate';
 
 const Login = () => {
   const [ email, setEmail ] = useState('');
@@ -14,10 +15,8 @@ const Login = () => {
     axios.get("http://localhost:3001/users").then(async (response) => {
         const user: User = response.data.find((el: User) => el.email === email)
         if (user && user.password === password){
-            user.lastLoginTime = String(Math.random());
-            await axios.put(`http://localhost:3001/users/${user.id}`, user).then(response => {
-                console.log('User updated:', response.data);
-            }).catch(error => {
+            user.lastLoginTime = formatDateFromDate(new Date());
+            await axios.put(`http://localhost:3001/users/${user.id}`, user).catch(error => {
                 console.error('Error:', error);
             });
             navigate('/')

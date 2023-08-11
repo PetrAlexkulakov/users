@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { formatDateFromDate } from '../../share/fromatDate';
 
 const Register = () => {
   const [ name, setName ] = useState('');
@@ -19,7 +20,7 @@ const Register = () => {
       name,
       email,
       password,
-      lastLoginTime: String(Date.now()),
+      lastLoginTime: formatDateFromDate(new Date()),
       status: "active",
     })
       .then(() => {
