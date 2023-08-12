@@ -8,28 +8,23 @@ export enum OperationType {
 
 export const handleExecute = async (
     selectedCheckboxes: string[],
-    operation: OperationType
+    operation: OperationType,
   ) => {
+    
     const deletePromises = selectedCheckboxes.map(checkbox => {
-      console.log(`Выполняется операция "${operation}" для выбранного элемента:`, checkbox);
-  
       switch (operation) {
         case OperationType.Block:
             return axios.get(`http://localhost:3001/users/${checkbox}`).then(async (user) => {
                 user.data.status = 'blocked'
-                await axios.put(`http://localhost:3001/users/${checkbox}`, user.data).then(response => {
-                    console.log('User updated:', response.data);
-                })
+                await axios.put(`http://localhost:3001/users/${checkbox}`, user.data)
             }).catch(error => {
                 console.error('Error:', error);
             });
-          break; //когда это происходит нужно снимать checkbox
+          break;
         case OperationType.Unblock:
             return axios.get(`http://localhost:3001/users/${checkbox}`).then(async (user) => {
                 user.data.status = "active"
-                await axios.put(`http://localhost:3001/users/${checkbox}`, user.data).then(response => {
-                    console.log('User updated:', response.data);
-                })
+                await axios.put(`http://localhost:3001/users/${checkbox}`, user.data)
             }).catch(error => {
                 console.error('Error:', error);
             });
@@ -43,6 +38,6 @@ export const handleExecute = async (
       }
     });
   
-    return Promise.all(deletePromises);
+    return Promise.all(deletePromises); 
 
 };

@@ -2,10 +2,10 @@ import axios from 'axios'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { User } from '../../interfaces/user';
+import { AnyUser, User } from '../../interfaces/user';
 import { formatDateFromDate } from '../../share/fromatDate';
 
-const Login = () => {
+const Login = ({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStateAction<AnyUser>> }) => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const navigate = useNavigate()
@@ -14,12 +14,14 @@ const Login = () => {
     e.preventDefault();
     axios.get("http://localhost:3001/users").then(async (response) => {
         const user: User = response.data.find((el: User) => el.email === email)
-        if (user && user.password === password){
+        if (user && user.password === password && user.status === "active"){
             user.lastLoginTime = formatDateFromDate(new Date());
-            await axios.put(`http://localhost:3001/users/${user.id}`, user).catch(error => {
+            axios.put(`http://localhost:3001/users/${user.id}`, user).then((resp) => {
+              setLoggedUser(resp.data)
+              navigate('/')
+            }).catch(error => {
                 console.error('Error:', error);
             });
-            navigate('/')
         }
     })  
   };

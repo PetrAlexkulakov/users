@@ -7,7 +7,6 @@ app.use(cors())
 
 const db = require('./models')
 
-//Routers
 const userRouter = require('./routes/Users')
 app.use("/users", userRouter)
 

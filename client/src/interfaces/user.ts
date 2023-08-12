@@ -8,3 +8,10 @@ export interface User {
     password: string;
     status: "active" | "blocked";
 }
+
+export interface NotLoggedUser {
+    id: 'Not Logged'
+    status: 'Not Logged'
+}
+
+export type AnyUser = User | NotLoggedUser

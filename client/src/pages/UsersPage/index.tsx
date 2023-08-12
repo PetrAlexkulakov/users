@@ -1,12 +1,16 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { User } from '../../interfaces/user'
 import { handleExecute, OperationType } from '../../share/executeFunctions';
 import { formatDateFromString } from '../../share/fromatDate';
+import { UserContext, defaultLoggedUser } from '../../share/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const UsersPage = () => {
     const [listOfUsers, setListOfUsers] = useState([]);
     const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
+    const { LoggedUser, setLoggedUser } = useContext(UserContext);
+    const navigate = useNavigate()
 
     useEffect(() => {
       axios.get("http://localhost:3001/users").then((response) => {
@@ -23,13 +27,23 @@ const UsersPage = () => {
     };
 
     const handleButtonClick = async (operation: OperationType) => {
-      await handleExecute(selectedCheckboxes, operation)
-
+      function unLogeUser() {
+        setLoggedUser(defaultLoggedUser);
+        navigate("/login")
+      }
+      const user = (await axios.get(`http://localhost:3001/users/${LoggedUser.id}`)).data
+      if (user.status === 'active') {
+        await handleExecute(selectedCheckboxes, operation)
+      } else {
+        unLogeUser()
+      }
+      if(selectedCheckboxes.includes(String(LoggedUser.id)) && operation !== OperationType.Unblock) {
+        unLogeUser()
+      }
+      setSelectedCheckboxes([])
       axios.get("http://localhost:3001/users").then((response) => {
         setListOfUsers(response.data);
       });
-
-      setSelectedCheckboxes([])
     }
   
     return (

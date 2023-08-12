@@ -3,8 +3,9 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { formatDateFromDate } from '../../share/fromatDate';
+import { AnyUser } from '../../interfaces/user';
 
-const Register = () => {
+const Register = ({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStateAction<AnyUser>> }) => {
   const [ name, setName ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
@@ -23,7 +24,8 @@ const Register = () => {
       lastLoginTime: formatDateFromDate(new Date()),
       status: "active",
     })
-      .then(() => {
+      .then((resp) => {
+        setLoggedUser(resp.data);
         navigate('/')
       })
       .catch((error) => {
