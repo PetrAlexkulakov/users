@@ -33,7 +33,7 @@ const UsersPage = () => {
         navigate("/login")
       }
       const user = (await axios.get(`http://localhost:3001/users/${LoggedUser.id}`)).data
-      if (user.status === 'active') {
+      if (user.status === 'active' && selectedCheckboxes.length !== 0) {
         await handleExecute(selectedCheckboxes, operation)
       } else {
         unLogeUser()
@@ -61,9 +61,18 @@ const UsersPage = () => {
     return (
       <>
         <div className="d-flex align-items-center justify-content-center m-2 gap-1">
-        <button onClick={() => handleButtonClick(OperationType.Block)} className="btn border-primary">Block</button>
-        <button onClick={() => handleButtonClick(OperationType.Unblock)} className="btn border-primary">Unblock</button>
-        <button onClick={() => handleButtonClick(OperationType.Delete)} className="btn border-primary">Delete</button>
+        <button onClick={() => handleButtonClick(OperationType.Block)} className="btn border-primary">
+          Block{' '}
+          <img src="/door-closed.svg" alt="Bootstrap" width="32" height="32" />
+        </button>
+        <button onClick={() => handleButtonClick(OperationType.Unblock)} className="btn border-primary">
+          Unblock{' '}
+          <img src="/door-open.svg" alt="Bootstrap" width="32" height="32" />
+        </button>
+        <button onClick={() => handleButtonClick(OperationType.Delete)} className="btn border-primary">
+          Delete{' '}
+          <img src="/trash.svg" alt="Bootstrap" width="32" height="32" />  
+        </button>
         </div>
         <table className="table table-bordered border-primary">
           <thead>
