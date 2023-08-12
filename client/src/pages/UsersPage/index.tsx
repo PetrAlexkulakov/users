@@ -7,9 +7,10 @@ import { UserContext, defaultLoggedUser } from '../../share/UserContext';
 import { useNavigate } from 'react-router-dom';
 
 const UsersPage = () => {
-    const [listOfUsers, setListOfUsers] = useState([]);
+    const [listOfUsers, setListOfUsers] = useState<User[]>([]);
     const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
     const { LoggedUser, setLoggedUser } = useContext(UserContext);
+    const [allCheckboxesChecked, setAllCheckboxesChecked] = useState(false);
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -45,6 +46,17 @@ const UsersPage = () => {
         setListOfUsers(response.data);
       });
     }
+
+    const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const checked = e.target.checked;
+      setAllCheckboxesChecked(checked);
+      if (checked) {
+        const allIds = listOfUsers.map(user => user.id.toString());
+        setSelectedCheckboxes(allIds);
+      } else {
+        setSelectedCheckboxes([]);
+      }
+    };
   
     return (
       <>
@@ -56,7 +68,12 @@ const UsersPage = () => {
         <table className="table table-bordered border-primary">
           <thead>
             <tr>
-              <th><input type="checkbox" name="" id="" /></th>
+              <th><input
+                type="checkbox"
+                id="selectAll"
+                checked={allCheckboxesChecked}
+                onChange={handleSelectAll}
+              /></th>
               <th>Id</th>
               <th>Name</th>
               <th>E-mail</th>
@@ -74,8 +91,8 @@ const UsersPage = () => {
                         name={value.email} 
                         id={value.id} 
                         checked={selectedCheckboxes.includes(String(value.id))} 
-                        onChange={e => handleCheckboxChange(e)} />
-                    </td>
+                        onChange={e => handleCheckboxChange(e)}
+                    /></td>
                     <td>{value.id}</td>
                     <td>{value.name}</td>
                     <td>{value.email}</td>
