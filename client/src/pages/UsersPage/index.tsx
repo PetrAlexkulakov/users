@@ -37,7 +37,7 @@ const UsersPage = () => {
       if (user.status === 'active' && selectedCheckboxes.length !== 0) {
         await handleExecute(selectedCheckboxes, operation)
       } else {
-        unLogeUser()
+        if (user.status !== 'active') unLogeUser()
       }
       if(selectedCheckboxes.includes(String(LoggedUser.id)) && operation !== OperationType.Unblock) {
         unLogeUser()
