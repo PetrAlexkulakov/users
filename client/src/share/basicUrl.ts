@@ -1,1 +1,1 @@
-export const basicUrl = process.env.BCURL || 'http://localhost:3001/users'
+export const basicUrl = process.env.BCURL || 'https://backend-users.onrender.com/users/'//http://localhost:3001/users'
