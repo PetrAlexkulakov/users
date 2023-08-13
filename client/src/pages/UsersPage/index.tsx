@@ -5,6 +5,7 @@ import { handleExecute, OperationType } from '../../share/executeFunctions';
 import { formatDateFromString } from '../../share/fromatDate';
 import { UserContext, defaultLoggedUser } from '../../share/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { basicUrl } from '../../share/basicUrl';
 
 const UsersPage = () => {
     const [listOfUsers, setListOfUsers] = useState<User[]>([]);
@@ -14,7 +15,7 @@ const UsersPage = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-      axios.get("http://localhost:3001/users").then((response) => {
+      axios.get(basicUrl).then((response) => {
         setListOfUsers(response.data) 
       })  
     }, [])
@@ -32,7 +33,7 @@ const UsersPage = () => {
         setLoggedUser(defaultLoggedUser);
         navigate("/login")
       }
-      const user = (await axios.get(`http://localhost:3001/users/${LoggedUser.id}`)).data
+      const user = (await axios.get(`${basicUrl}/${LoggedUser.id}`)).data
       if (user.status === 'active' && selectedCheckboxes.length !== 0) {
         await handleExecute(selectedCheckboxes, operation)
       } else {
@@ -42,7 +43,7 @@ const UsersPage = () => {
         unLogeUser()
       }
       setSelectedCheckboxes([])
-      axios.get("http://localhost:3001/users").then((response) => {
+      axios.get(basicUrl).then((response) => {
         setListOfUsers(response.data);
       });
     }

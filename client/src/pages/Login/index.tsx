@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { AnyUser, User } from '../../interfaces/user';
 import { formatDateFromDate } from '../../share/fromatDate';
+import { basicUrl } from '../../share/basicUrl';
 
 const Login = ({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStateAction<AnyUser>> }) => {
   const [ email, setEmail ] = useState('');
@@ -12,11 +13,11 @@ const Login = ({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetState
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    axios.get("http://localhost:3001/users").then(async (response) => {
+    axios.get(basicUrl).then(async (response) => {
         const user: User = response.data.find((el: User) => el.email === email)
         if (user && user.password === password && user.status === "active"){
             user.lastLoginTime = formatDateFromDate(new Date());
-            axios.put(`http://localhost:3001/users/${user.id}`, user).then((resp) => {
+            axios.put(`${basicUrl}/${user.id}`, user).then((resp) => {
               setLoggedUser(resp.data)
               navigate('/')
             }).catch(error => {

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { formatDateFromDate } from '../../share/fromatDate';
 import { AnyUser } from '../../interfaces/user';
+import { basicUrl } from '../../share/basicUrl';
 
 const Register = ({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStateAction<AnyUser>> }) => {
   const [ name, setName ] = useState('');
@@ -14,7 +15,7 @@ const Register = ({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetSt
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const axiosInstance = axios.create({
-      baseURL: "http://localhost:3001/users",
+      baseURL: basicUrl,
     });
     
     axiosInstance.post("/", {

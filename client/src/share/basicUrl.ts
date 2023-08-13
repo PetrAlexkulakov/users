@@ -1,0 +1,1 @@
+export const basicUrl = process.env.BCURL || 'http://localhost:3001/users'

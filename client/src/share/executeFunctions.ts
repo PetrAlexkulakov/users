@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { basicUrl } from './basicUrl';
 
 export enum OperationType {
   Block = 'Block',
@@ -14,23 +15,23 @@ export const handleExecute = async (
     const deletePromises = selectedCheckboxes.map(checkbox => {
       switch (operation) {
         case OperationType.Block:
-            return axios.get(`http://localhost:3001/users/${checkbox}`).then(async (user) => {
+            return axios.get(`${basicUrl}/${checkbox}`).then(async (user) => {
                 user.data.status = 'blocked'
-                await axios.put(`http://localhost:3001/users/${checkbox}`, user.data)
+                await axios.put(`${basicUrl}/${checkbox}`, user.data)
             }).catch(error => {
                 console.error('Error:', error);
             });
           break;
         case OperationType.Unblock:
-            return axios.get(`http://localhost:3001/users/${checkbox}`).then(async (user) => {
+            return axios.get(`${basicUrl}/${checkbox}`).then(async (user) => {
                 user.data.status = "active"
-                await axios.put(`http://localhost:3001/users/${checkbox}`, user.data)
+                await axios.put(`${basicUrl}/${checkbox}`, user.data)
             }).catch(error => {
                 console.error('Error:', error);
             });
           break;
         case OperationType.Delete:
-          return axios.delete(`http://localhost:3001/users/${checkbox}`).catch(error => {
+          return axios.delete(`${basicUrl}/${checkbox}`).catch(error => {
             console.error('Error:', error);
         });
         default:
