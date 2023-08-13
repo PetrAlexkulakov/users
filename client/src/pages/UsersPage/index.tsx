@@ -3,7 +3,8 @@ import { useContext, useEffect, useState } from 'react'
 import { User } from '../../interfaces/user'
 import { handleExecute, OperationType } from '../../share/executeFunctions';
 import { formatDateFromString } from '../../share/fromatDate';
-import { UserContext, defaultLoggedUser } from '../../share/UserContext';
+import { UserContext } from '../../share/UserContext';
+import { defaultLoggedUser } from '../../share/defaultLoggedUser';
 import { useNavigate } from 'react-router-dom';
 import { basicUrl } from '../../share/basicUrl';
 
@@ -37,7 +38,7 @@ const UsersPage = () => {
       if (user.status === 'active' && selectedCheckboxes.length !== 0) {
         await handleExecute(selectedCheckboxes, operation)
       } else {
-        if (user.status !== 'active') unLogeUser()
+        if (user.status == 'active') unLogeUser()
       }
       if(selectedCheckboxes.includes(String(LoggedUser.id)) && operation !== OperationType.Unblock) {
         unLogeUser()

@@ -1,7 +1,6 @@
 import { createContext, useState } from 'react';
-import { AnyUser, NotLoggedUser } from '../interfaces/user';
-
-export const defaultLoggedUser: NotLoggedUser = { id: 'Not Logged', status: 'Not Logged' };
+import { AnyUser } from '../interfaces/user';
+import { defaultLoggedUser } from './defaultLoggedUser';
 
 export const UserContext = createContext<{
   LoggedUser: AnyUser;
